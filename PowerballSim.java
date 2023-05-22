@@ -3,6 +3,7 @@ package sampleProject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Scanner;
 
 //Statistics and prize numbers are taken from Powerball.com
 public class PowerballSim {
@@ -11,8 +12,8 @@ public class PowerballSim {
 	static int RED_BALL_MAX = 26;
 
 	public static void main(String[] args) {
-		List<Integer> win = pickWinningNums();
 		List<Integer> play = pickPlayerNums();
+		List<Integer> win = pickWinningNums();
 		compareLists(win, play);
 		System.out.println();	
 		}
@@ -74,22 +75,57 @@ public class PowerballSim {
 	}
 	//picks the player's lottery ticket
 	private static List<Integer> pickPlayerNums() {
-		List<Integer> playerList = new ArrayList<>();
-	
-		while (playerList.size() < 5) {	
-			int whiteNum = randomNumberGenerator(WHITE_BALL_MAX);
-			//prevents duplicates
-			if (!playerList.contains(whiteNum)) {
-				playerList.add(whiteNum);
+		try (Scanner s = new Scanner(System.in)) {
+			System.out.println("Would you like to create your own ticket, or have one randomly generated for you?");
+			System.out.println("1)Create ticket");
+			System.out.println("2)Random ticket");
+			int select = s.nextInt();
+			
+			List<Integer> playerList = new ArrayList<>();
+			
+			if (select == 1) {
+				while(playerList.size() < 5) {
+					System.out.println("Pick a number 1 - 69");
+					int num = s.nextInt();
+					if((num >= 1 && num <= 69) && !playerList.contains(num)) {
+					playerList.add(num);
+					} else {
+						System.out.println("Not a valid number. Try again.");
+						
+					}
+				}
+				
+				Collections.sort(playerList);
+				
+				if(playerList.size() == 5) {
+					System.out.println("Pick your Powerball number 1-26");
+					int num = s.nextInt();
+					if(num >= 1 && num <= 26) {
+					playerList.add(num);
+					} else {
+						System.out.println("Not a valid number. Try again.");
+					}
+				}
 			}
+
+			else if(select == 2) {
+			while (playerList.size() < 5) {	
+				int whiteNum = randomNumberGenerator(WHITE_BALL_MAX);
+				//prevents duplicates
+				if (!playerList.contains(whiteNum)) {
+					playerList.add(whiteNum);
+				}
+			}
+			
+			Collections.sort(playerList);
+			playerList.add(randomNumberGenerator(RED_BALL_MAX));
+			
+			}
+			
+			System.out.println("Your numbers are " + playerList);
+			return playerList;
 		}
-		
-		Collections.sort(playerList);
-		playerList.add(randomNumberGenerator(RED_BALL_MAX));
-		
-		System.out.println("Your numbers are " + playerList);
-		return playerList;
-	}
+	}		
 		
 	//picks the winning lottery numbers
 	private static List<Integer> pickWinningNums() {
