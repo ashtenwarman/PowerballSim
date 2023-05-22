@@ -11,27 +11,46 @@ public class PowerballSim {
 	static int RED_BALL_MAX = 26;
 
 	public static void main(String[] args) {
+		//while(true) {
 		List<Integer> win = pickWinningNums();
 		List<Integer> play = pickPlayerNums();
-		compareListsAndReturnProbabilities(win, play);
+		compareLists(win, play);
+		System.out.println();	
+		}
 		
-	}
+	//}
 
-	private static void compareListsAndReturnProbabilities(List<Integer> win, List<Integer> play) {
+	private static void compareLists(List<Integer> win, List<Integer> play) {
 		int counter = 0;
 		//winning powerball(last) number
 		int winPB = win.get(win.size()-1);
 		//player powerball number
 		int playPB = play.get(play.size()-1);
 		
-		//iterates through lists and compares
-		for(int i = 0; i < win.size(); i++) {
-			for(int j = 0; j < play.size(); j++) {
-				if(win.get(i).equals(play.get(j))) {
-					counter++;
-				}
-			}
+		//compares lists
+		if(win.get(0).equals(play.get(0))) {
+			counter++;
 		}
+		if(win.get(1).equals(play.get(1))) {
+			counter++;
+		}
+		if(win.get(2).equals(play.get(2))) {
+			counter++;
+		}
+		if(win.get(3).equals(play.get(3))) {
+			counter++;
+		}
+		if(win.get(4).equals(play.get(4))) {
+			counter++;
+		}
+		if(winPB == playPB) {
+			counter++;
+		}
+		
+		returnWinnings(counter, winPB, playPB);
+	}
+
+	private static void returnWinnings(int counter, int winPB, int playPB) {
 		//returns winnings and statistics, if applicable
 		if(counter == 1 && winPB == playPB) {
 			System.out.println("You have won $4. Your odds of winning were 1 in 38.32");
@@ -55,7 +74,7 @@ public class PowerballSim {
 			System.out.println("You are not a winner. Please try again.");
 		}
 	}
-
+	//picks the player's lottery ticket
 	private static List<Integer> pickPlayerNums() {
 		List<Integer> playerList = new ArrayList<>();
 	
@@ -74,9 +93,7 @@ public class PowerballSim {
 		return playerList;
 	}
 		
-		
-	
-
+	//picks the winning lottery numbers
 	private static List<Integer> pickWinningNums() {
 		List<Integer> winningList = new ArrayList<>();
 		
@@ -94,6 +111,7 @@ public class PowerballSim {
 		return winningList;
 		
 	}
+	
 	//generates random integers
 	private static int randomNumberGenerator(int max) {
 		return (int)Math.ceil(Math.random() * max);
