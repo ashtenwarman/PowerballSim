@@ -11,14 +11,12 @@ public class PowerballSim {
 	static int RED_BALL_MAX = 26;
 
 	public static void main(String[] args) {
-		//while(true) {
 		List<Integer> win = pickWinningNums();
 		List<Integer> play = pickPlayerNums();
 		compareLists(win, play);
 		System.out.println();	
 		}
 		
-	//}
 
 	private static void compareLists(List<Integer> win, List<Integer> play) {
 		int counter = 0;
